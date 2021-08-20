@@ -1,5 +1,14 @@
 import { createApp } from 'vue';
-import App from './App.vue';
-import store from './store';
+import App from '@/App.vue';
+import '@/vendor/normalize.css';
+import loader from "vue-ui-preloader";
 
-createApp(App).use(store).mount('#app');
+import components from '@/components';
+
+const app = createApp(App)
+
+components.forEach(comp => {
+    app.component(comp.name, comp)
+})
+
+app.use(loader).mount('#app');
