@@ -3,7 +3,7 @@
         class="button"
         :type="type"
         :disabled="isDisabled"
-        @click="$emit(handleButtonClick)"
+        @click.stop="$emit('handleButtonClick')"
     >
     {{ buttonText }}
     </button>

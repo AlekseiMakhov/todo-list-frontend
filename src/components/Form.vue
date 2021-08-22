@@ -1,5 +1,5 @@
 <template>
-    <form class="form" :name="formName">
+    <form class="form">
         <h2 class="form__title app__title">{{ title }}</h2>
         <input 
             type="text"
@@ -7,19 +7,20 @@
             minlength="1"
             maxlength="100"
             placeholder="Заголовок"
-            v-model.trim="header"
+            v-model.trim="data.header"
         />
         <textarea 
-            name="desc" 
-            id="desc" 
+            name="desc"
+            id="desc"
             class="form__desc"
-            v-model.trim="description"
+            v-model.trim="data.description"
         >
         </textarea>
-        <my-selector />
+        <my-selector :priority="data.priority" />
         <my-button 
             :buttonText="buttonText"
-            aria-placeholder="Описание"
+            placeholder="Описание"
+            @click.prevent="buttonClick"
         />
     </form>
 </template>
@@ -29,10 +30,7 @@ export default {
   name: 'my-form',
   data() {
       return {
-          header: '',
-          description: '',
-          priority: 'l',
-          buttonText: '',
+          data: this.$attrs.data || {}
       }
   },
   props: {
@@ -40,19 +38,20 @@ export default {
           type: String,
           default: 'Новое задание',
       },
-      formName: {
+      buttonText: {
           type: String,
-          default: 'add'
-      },
+          default: 'Добавить задачу'
+      }
   },
+  inject: ['setCurTask', 'getNewTask'],
   methods: {
-      name() {
-          
+      buttonClick() {
+        //   console.log(this.$attrs.data.desc)
+        //   setCurTask($this.$attrs)
+        //   getNewTask({ desc: this.description, header: this.header, priority: this.priority, ...task})
       },
   },
-  beforeMount() {
-      this.buttonText = (this.formName == 'edit' ? 'Обновить' : 'Добавить') + ' задание'
-  }
+  
 };
 </script>
 

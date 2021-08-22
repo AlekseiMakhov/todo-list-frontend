@@ -1,14 +1,15 @@
 <template>
-    <div class="modal" v-if="show" @click.stop="hideModal">
-        <div class="modal__container" @click.stop>
-        <div class="modal__content">
-            
-                <slot></slot>
-                
+    <transition name="fade" mode="out-in">
+        <div class="modal" v-if="show" @click.stop="closeModal">
+            <div class="modal__container" @click.stop>
+            <div class="modal__content">
+                <slot></slot> 
             </div>
-            <div class="modal__close-button" @click="hideModal"></div>
+            <div class="modal__close-button" @click="closeModal"></div>
+            </div>
         </div>
-    </div>
+    </transition>
+    
 </template>
 
 <script>
@@ -21,7 +22,7 @@ export default {
       }
   },
   methods: {
-      hideModal() {
+      closeModal() {
           this.$emit('update:show', false);
       },
   },
@@ -32,7 +33,16 @@ export default {
 <style lang="scss" scoped>
 @import '@/styles/global.scss';
 
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .25s
+}
+
+.fade-enter-from, .fade-leave-to {
+  opacity: 0;
+}
+
 .modal {
+    position: fixed;
     top: 0;
     bottom: 0;
     left: 0;
@@ -41,7 +51,6 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
-    position: fixed;
 
     &__content {
         box-sizing: border-box;
@@ -54,7 +63,6 @@ export default {
         align-items: center;
         box-shadow: 0px 4px 40px rgba(0, 0, 0, 0.1);
         border-radius: 20px;
-        /* padding: 40px; */
     }
 
     &__container {

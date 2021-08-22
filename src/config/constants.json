@@ -1,9 +1,10 @@
 {
+    "BASE_URL": "http://localhost:3000/tasks",
     "items": [
         {
             "id": "1",
             "priority": "m",
-            "name": "task 1",
+            "header": "task 1",
             "desc": "task 1 description",
             "date": "2021/04/21",
             "done": false
@@ -11,24 +12,24 @@
         {
             "id": "2",
             "priority": "l",
-            "name": "task 1",
-            "desc": "task 1 description",
+            "header": "task 2",
+            "desc": "task 2 description",
             "date": "2021/04/21",
             "done": false
         },
         {
             "id": "3",
             "priority": "h",
-            "name": "task 1",
-            "desc": "task 1 description",
+            "header": "task 3",
+            "desc": "task 3 description",
             "date": "2021/04/21",
             "done": false
         },
         {
             "id": "4",
             "priority": "l",
-            "name": "task 1",
-            "desc": "task 1 description",
+            "header": "task 4",
+            "desc": "task 4 description",
             "date": "2021/04/21",
             "done": true
         }

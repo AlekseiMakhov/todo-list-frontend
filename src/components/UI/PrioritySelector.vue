@@ -1,17 +1,17 @@
 <template>
     <div class="selector">
         <p
-            @click="() => setPriority('l')"
+            @click="$emit('setPriority', 'l')"
             v-bind:class="['selector__priority-level', priority == 'l' ? 'selector__priority-level_type_l' : '']">
             Обычное
         </p>
         <p
-            @click="() => setPriority('m')"
+            @click="$emit('setPriority', 'm')"
             v-bind:class="['selector__priority-level', priority == 'm' ? 'selector__priority-level_type_m' : '']">
             Важное
         </p>
         <p
-            @click="() => setPriority('h')"
+            @click="$emit('setPriority', 'h')"
             v-bind:class="['selector__priority-level', priority == 'h' ? 'selector__priority-level_type_h' : '']">
             Очень важное
         </p>
@@ -21,14 +21,10 @@
 <script>
     export default {
         name: 'my-selector',
-        data() {
-            return {
-                priority: 'l'
-            }
-        },
-        methods: {
-            setPriority(level) {
-                this.priority = level
+        props: {
+            priority: {
+                type: String,
+                default: 'l'
             },
         },
     }

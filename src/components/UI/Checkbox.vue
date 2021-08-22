@@ -1,9 +1,9 @@
 <template>
     <input
         type="checkbox"
-        v-bind:class="[isChecked ? 'checkbox_checked' : '', 'checkbox']"
-        :checked="isChecked"
-        @click="onCheck"
+        class="checkbox"
+        v-model="isChecked"
+        @click.stop="$emit('onCheck', !isChecked)"
     />
 </template>
 
@@ -15,11 +15,6 @@ export default {
       type: Boolean,
       default: false,
     },
-  },
-  methods: {
-      onCheck() {
-        return this.$emit('checkHandler', this)
-      },
   },
 };
 </script>
@@ -37,7 +32,7 @@ export default {
     background-size: cover;
     cursor: pointer;
 
-    &_checked {
+    &:checked {
       background-image: url('../../assets/icons/checkbox.svg');
     }
 }

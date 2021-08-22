@@ -1,5 +1,5 @@
 import { createApp } from 'vue';
-import App from '@/App.vue';
+import App from '@/components/App.vue';
 import '@/vendor/normalize.css';
 import loader from "vue-ui-preloader";
 

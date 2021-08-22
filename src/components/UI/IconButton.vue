@@ -1,8 +1,8 @@
 <template>
     <button
         type="button"
-        v-bind:class="['icon-button', `icon-button_type_${type}`, isDisabled ? 'icon-button_disabled' : '']"
-        :disabled="isDisabled"
+        class="icon-button"
+        @click.stop="onClick"
     >
     </button>
 </template>
@@ -11,14 +11,15 @@
     export default {
         name: 'my-icon-button',
         props: {
-            isDisabled: {
-                type: Boolean,
-                default: false
+            task: {
+                type: Object,
+                default: {}
             },
-            type: {
-                type: String,
-                default: 'edit'
-            }
+        },
+        methods: {
+            onClick() {
+                return this.$emit('buttonClick', this.task)
+            },
         },
     }
 </script>
@@ -33,28 +34,13 @@
     cursor: pointer;
     border: none;
     outline: none;
-    transition: color .25s;
+    transition: all .25s;
     background-color: transparent;
+    background-image: url('../../assets/icons/trash-icon-default.svg');
 
     &:hover {
         color: $dark-blue;
-    }
-
-    &_type {
-
-        &_edit {
-            background-image: url('../../assets/icons/pencil-icon.svg');
-            margin-right: 10px;
-        }
-
-        &_delete {
-            background-image: url('../../assets/icons/trash-icon.svg');
-        }
-    }
-
-    &_disabled {
-        background-image: url('../../assets/icons/pencil-icon-gray.svg');
-        cursor: default;
+        background-image: url('../../assets/icons/trash-icon.svg');
     }
     
 }

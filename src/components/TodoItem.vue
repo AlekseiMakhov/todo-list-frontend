@@ -1,31 +1,26 @@
 <template>
-  <li class="todo-item">
-    <div 
-      v-bind:class="[data.priority ? `todo-item__priority_level_${data.priority}` : '', 'todo-item__priority']"
-    >
-    </div>
-    <div class="todo-item__container">
-      <div class="todo-item__task-container">
-        <my-checkbox 
-          :isChecked="data.done" 
-        />
-        <p 
-          v-bind:class="[data.done ? 'todo-item__task_done' : '', 'todo-item__task']"
-        >
-        {{ data.name }}
-        </p>
+  <transition name="fade-slide" mode="out-in">
+    <li class="todo-item" @click="taskClick">
+      <div 
+        v-bind:class="[data.priority ? `todo-item__priority_level_${data.priority}` : '', 'todo-item__priority']"
+      >
       </div>
-      <div class="todo-item__buttons">
-        <my-icon-button
-          type="edit"
-          :isDisabled="data.done"
-        />
-        <my-icon-button
-          type="delete"
-        />      
-      </div>
-    </div>
-  </li>
+      <div class="todo-item__container">
+        <div class="todo-item__task-container">
+          <my-checkbox 
+            :isChecked="data.done"
+          />
+          <p 
+            v-bind:class="[data.done ? 'todo-item__task_done' : '', 'todo-item__task']"
+          >
+          {{ data.header }}
+          </p>
+        </div>
+        <my-icon-button /> 
+      </div>     
+    </li>
+  </transition>
+  
 </template>
 
 <script>
@@ -39,12 +34,34 @@ export default {
       default: {}
     },
   },
+  inject: ['getTask', 'showEditModal'],
+
+  methods: {
+    taskClick() {
+      this.getTask(this.data);
+      this.showEditModal(true);
+    },
+  },
 
 };
 </script>
 
 <style lang="scss" scoped>
 @import '@/styles/global.scss';
+
+.fade-slide-enter-active, .fade-slide-leave-active {
+  transition: opacity .25s, transform .25s
+}
+
+.fade-slide-enter-from {
+  opacity: 0;
+  transform: translateX(-100%);
+}
+
+.fade-slide-leave-to {
+  opacity: 0;
+  transform: translateX(100%);
+}
 
 .todo-item {
   padding: 0;
@@ -57,6 +74,7 @@ export default {
   box-shadow: 0 4px 40px rgba($color: $black, $alpha: .1);
   overflow: hidden;
   transition: transform .2s;
+  cursor: pointer;
 
   &:hover {
     transform: translateY(-6px);
@@ -113,12 +131,6 @@ export default {
       color: $gray;
     }
   
-  }
-
-  &__buttons {
-    margin: 0;
-    display: flex;
-    justify-content: space-between;
   }
 
 }
