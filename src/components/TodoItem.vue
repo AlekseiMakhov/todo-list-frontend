@@ -8,7 +8,7 @@
       <div class="todo-item__container">
         <div class="todo-item__task-container">
           <my-checkbox 
-            :isChecked="data.done"
+            :isDone="data.done"
           />
           <p 
             v-bind:class="[data.done ? 'todo-item__task_done' : '', 'todo-item__task']"
@@ -16,7 +16,9 @@
           {{ data.header }}
           </p>
         </div>
-        <my-icon-button /> 
+        <my-icon-button 
+          @click="clickIcon"
+        /> 
       </div>     
     </li>
   </transition>
@@ -34,13 +36,17 @@ export default {
       default: {}
     },
   },
-  inject: ['getTask', 'showEditModal'],
+  inject: ['getTask', 'showEditModal', 'clickTrashButton'],
 
   methods: {
     taskClick() {
       this.getTask(this.data);
       this.showEditModal(true);
     },
+    clickIcon() {
+      console.log(this.data._id)
+      this.clickTrashButton(this.data._id);
+    }
   },
 
 };
@@ -50,17 +56,26 @@ export default {
 @import '@/styles/global.scss';
 
 .fade-slide-enter-active, .fade-slide-leave-active {
-  transition: opacity .25s, transform .25s
+  transition: transform 2s
+}
+
+.fade-slide-appear {
+  transition: transform 2s
+}
+
+.fade-slide-appear-from {
+  opacity: 0;
+  transform: translate(-100px);
 }
 
 .fade-slide-enter-from {
   opacity: 0;
-  transform: translateX(-100%);
+  transform: translate(-100px);
 }
 
 .fade-slide-leave-to {
   opacity: 0;
-  transform: translateX(100%);
+  transform: translate(100px);
 }
 
 .todo-item {
@@ -75,6 +90,7 @@ export default {
   overflow: hidden;
   transition: transform .2s;
   cursor: pointer;
+  opacity: 1;
 
   &:hover {
     transform: translateY(-6px);
@@ -124,6 +140,8 @@ export default {
     color: $text-color;
     margin: 0 0 0 15px;
     text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
     max-width: 400px;
 
     &_done {

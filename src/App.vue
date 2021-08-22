@@ -8,7 +8,7 @@
           type="date"
           v-model="date"
           class="app__date-input"
-          @change="dateSelect"
+          @change="getTasksOnSelectedDate"
         />
       </div>
       <loader
@@ -26,9 +26,9 @@
       </loader>
 
       <my-alt-image
-        v-else-if="isError"
+        v-if="isError"
         type="error"
-        altText="Что-то пошло не так ((("
+        :altText="errorText"
       />
       <my-alt-image 
         v-else-if="isEmpty"
@@ -44,17 +44,22 @@
         type="button"
         btn-class="normal"
         buttonText="Добавить задачу"
-        @click="() => isAddModalShow = true"
+        @click="isAddModalShow = true"
       />
       <my-modal v-model:show="isAddModalShow">
         <my-form 
+          :data="{
+            date: date,
+            done: false,
+          }"
+          @submit="handleAddTask"
         />
       </my-modal>
-      <my-modal :show="isEditModalShow">
+      <my-modal v-model:show="isEditModalShow">
         <my-form 
-          title="Редактировать"
-          buttonText='Сохранить'
-          :data="task"
+          title="Поправить задачу"
+          buttonText="Сохранить"
+          @submit="handleEditTask"
         />
       </my-modal>
     </body>
@@ -62,8 +67,8 @@
 </template>
 
 <script>
-// import { items } from '@/config/constants.json';
-import { getTasks } from '@/utils/queries.js';
+
+import { getTasks, editTask, deleteTask, addTask } from '@/utils/queries.js';
 
 export default {
   name: 'App',
@@ -78,7 +83,8 @@ export default {
       isListItemInfoShow: false,
       isLoading: false,
       task: {},
-      newTask: {}
+      newTask: {},
+      errorText: ''
     }
   },
   beforeMount() {
@@ -86,48 +92,96 @@ export default {
   },
 
   mounted() {
-    this.isLoading = true
-    getTasks(this.date)
-    .then(response => {
-      console.log(response)
-      if (!response.data) throw new Error('Not found')
-      if (!response.data.length) this.isEmpty = true
-      this.listItems = response.data
-    })
-    .catch(err => console.log(err.message))
-    .finnally(this.isLoading = false)
+    this.getTasksOnSelectedDate()
   },
 
   provide() {
     return {
-      setCurTask: (task) => task = this.task,
-      getNewTask: (data) => this.newTask = data,
+      curTask: () => this.task,
+      getCurTask: (task) => this.task = task,
+      // getNewTask: (data) => this.newTask = data,
       getTask: (data) => this.task = data,
-      showEditModal: (data) => this.isEditModalShow = data
+      showEditModal: (value) => {
+        this.isEditModalShow = value
+        console.log(value, this.isEditModalShow)
+      },
+      clickTrashButton: (id) => {
+        this.handleDeleteTask(id);
+      }
     }
   },
   methods: {
-    dateSelect() {
-      console.log(this.date)
+    getTasksOnSelectedDate() {
       this.isLoading = true
       getTasks(this.date)
-        .then(response => {
-          if (!response.data.length) this.isEmpty = true
-          this.listItems = response.data
-        })
-        .catch(err => console.log(err.message))
-        .finnally(this.isLoading = false)
+      .then(response => {
+        if (!response.data) throw new Error('Not found')
+        this.isEmpty = !response.data.length
+        this.listItems = response.data
+      })
+      .catch(err => console.log(err.message))
+      .finally(() => {
+        setTimeout(() => this.isLoading = false, 500)
+      })
+    },
+    handleEditTask(data) {
+      this.isLoading = true
+      editTask(data)
+      .then(response => {
+        console.log(response)
+        if (!response.data) throw new Error('Not found')
+        this.isEmpty = !response.data.length
+        this.listItems = response.data
+      })
+      .catch(err => console.log(err.message))
+      .finally(() => {
+        setTimeout(() => this.isLoading = false, 500)
+      })
+    },
+
+    handleDeleteTask(id) {
+      this.isLoading = true
+      deleteTask(id)
+      .then(response => {
+        console.log(response)
+        if (!response.data) throw new Error('Not found')
+        this.listItems = [...this.listItems].filter(item => item._id != id)
+        this.isEmpty = !response.listItems.length
+        
+      })
+      .catch(err => console.log(err.message))
+      .finally(() => {
+        setTimeout(() => this.isLoading = false, 500)
+      })
+    },
+    handleAddTask(data) {
+      this.isLoading = true
+      console.log(data)
+      addTask(data)
+      .then(response => {
+        console.log(response)
+        if (!response.data) throw new Error('Not found')
+        this.isEmpty = !response.data.length
+        this.listItems = response.data
+      })
+      .catch(err => console.log(err.message))
+      .finally(() => {
+        setTimeout(() => this.isLoading = false, 500)
+      })
     },
   },
+
 };
 </script>
 
 <style lang="scss">
 @import '@/styles/global.scss';
+
 .loader-circular {
   width: 100px !important;
   height: 100px !important;
 }
+
 .app {
   font-family: Inter, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -171,7 +225,7 @@ export default {
       height: 22px;
       transform: translateX(-10px);
       color: $blue;
-      background: url('../assets/icons/calendar-icon.svg');
+      background: url('./assets/icons/calendar-icon.svg');
       background-size: cover;
     }
   }

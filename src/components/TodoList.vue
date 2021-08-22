@@ -2,7 +2,7 @@
   <ul class="todo-list">
     <my-todo-item
       v-for="item in listItems"
-      :key="item.id"
+      :key="item._id"
       :data="item"
     />
   </ul>

@@ -1,5 +1,5 @@
 <template>
-    <form class="form">
+    <form class="form" @submit.prevent="submitForm">
         <h2 class="form__title app__title">{{ title }}</h2>
         <input 
             type="text"
@@ -7,30 +7,35 @@
             minlength="1"
             maxlength="100"
             placeholder="Заголовок"
-            v-model.trim="data.header"
+            v-model.trim="header"
         />
-        <textarea 
+        <textarea
             name="desc"
+            placeholder="Описание"
             id="desc"
             class="form__desc"
-            v-model.trim="data.description"
+            v-model.trim="description"
         >
         </textarea>
-        <my-selector :priority="data.priority" />
+        <my-selector v-model:priority="priority" />
         <my-button 
             :buttonText="buttonText"
-            placeholder="Описание"
-            @click.prevent="buttonClick"
+            :isDisabled="false"
         />
     </form>
 </template>
 
 <script>
+
+
 export default {
   name: 'my-form',
   data() {
       return {
-          data: this.$attrs.data || {}
+          data: {},
+          description: '',
+          header: '',
+          priority: 'l'
       }
   },
   props: {
@@ -41,15 +46,32 @@ export default {
       buttonText: {
           type: String,
           default: 'Добавить задачу'
+      },
+      task: {
+          type: Object,
+          default: {}
       }
   },
-  inject: ['setCurTask', 'getNewTask'],
+  inject: ['curTask'],
+
   methods: {
-      buttonClick() {
-        //   console.log(this.$attrs.data.desc)
-        //   setCurTask($this.$attrs)
-        //   getNewTask({ desc: this.description, header: this.header, priority: this.priority, ...task})
+      submitForm(evt) {
+          if (evt.target.checkValidity()) {
+            this.data.header = this.header;
+            this.data.description = this.description;
+            this.data.priority = this.priority;
+            this.$emit('submit', this.data)
+          }
       },
+  },
+  
+  mounted () {
+      this.data = this.curTask();
+      if (this.data) {
+          this.header = this.data.header;
+          this.description = this.data.description;
+          this.priority = this.data.priority;
+      }
   },
   
 };

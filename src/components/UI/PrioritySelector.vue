@@ -1,17 +1,17 @@
 <template>
     <div class="selector">
         <p
-            @click="$emit('setPriority', 'l')"
+            @click="$emit('update:priority', 'l')"
             v-bind:class="['selector__priority-level', priority == 'l' ? 'selector__priority-level_type_l' : '']">
             Обычное
         </p>
         <p
-            @click="$emit('setPriority', 'm')"
+            @click="$emit('update:priority', 'm')"
             v-bind:class="['selector__priority-level', priority == 'm' ? 'selector__priority-level_type_m' : '']">
             Важное
         </p>
         <p
-            @click="$emit('setPriority', 'h')"
+            @click="$emit('update:priority', 'h')"
             v-bind:class="['selector__priority-level', priority == 'h' ? 'selector__priority-level_type_h' : '']">
             Очень важное
         </p>

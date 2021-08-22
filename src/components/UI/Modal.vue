@@ -2,8 +2,8 @@
     <transition name="fade" mode="out-in">
         <div class="modal" v-if="show" @click.stop="closeModal">
             <div class="modal__container" @click.stop>
-            <div class="modal__content">
-                <slot></slot> 
+            <div @closeForm="closeForm" class="modal__content">
+                <slot></slot>
             </div>
             <div class="modal__close-button" @click="closeModal"></div>
             </div>
@@ -23,9 +23,11 @@ export default {
   },
   methods: {
       closeModal() {
-          this.$emit('update:show', false);
+        this.$emit('update:show', false);
       },
   },
+  emits: ['update:show']
+
 };
 
 </script>

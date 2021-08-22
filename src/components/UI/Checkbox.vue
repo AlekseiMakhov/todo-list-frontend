@@ -1,17 +1,17 @@
 <template>
-    <input
-        type="checkbox"
-        class="checkbox"
-        v-model="isChecked"
-        @click.stop="$emit('onCheck', !isChecked)"
-    />
+    <button
+        type="button"
+        v-bind:class="['checkbox', isDone ? 'checkbox_done' : '']"
+        @click.stop="$emit('onCheck', !isDone)"
+    >
+    </button>
 </template>
 
 <script>
 export default {
   name: 'my-checkbox',
   props: {
-    isChecked: {
+    isDone: {
       type: Boolean,
       default: false,
     },
@@ -25,15 +25,26 @@ export default {
 .checkbox {
     width: 20px;
     height: 20px;
-    border: none;
+    border: 2px solid $gray;
     border-radius: 50%;
     margin: 0;
-    background-image: url('../../assets/icons/checkbox-empty.svg');
+    padding: 0;
     background-size: cover;
+    background-color: $white;
     cursor: pointer;
 
-    &:checked {
+    &_done {
+      border: none;
       background-image: url('../../assets/icons/checkbox.svg');
+
+      &:hover {
+        background-image: url('../../assets/icons/checkbox-dark.svg');
+      }
+    }
+
+    &:hover {
+      background-color: $light-gray;
+      border-width: 3px;
     }
 }
 </style>

@@ -3,7 +3,7 @@
         class="button"
         :type="type"
         :disabled="isDisabled"
-        @click.stop="$emit('handleButtonClick')"
+        @click="$emit('handleButtonClick')"
     >
     {{ buttonText }}
     </button>
@@ -27,6 +27,7 @@ export default {
       default: 'submit',
     },
   },
+  emits: ['handleButtonClick']
 };
 </script>
 
