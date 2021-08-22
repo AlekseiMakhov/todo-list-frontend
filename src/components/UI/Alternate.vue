@@ -28,6 +28,7 @@
             }
         },
         beforeMount () {
+            // установка классов перед монтированием в зависимости от типа контента
             this.imageClass = `alternate__image_type_${this.type}`;
             this.textClass = `alternate__text_type_${this.type}`;
         },

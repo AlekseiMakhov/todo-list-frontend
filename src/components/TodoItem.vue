@@ -33,25 +33,28 @@
 
 export default {
     name: 'my-todo-item',
-
     props: {
         data: {
             type: Object,
             default: {}
         },
     },
+    // проброс методов из корневого компонента
     inject: [
         'getTask', 'showEditModal', 'clickTrashButton', 'putDoneFlag'
     ],
 
     methods: {
+        // открытие окна и передача в него данных для редактирвания по клику
         taskClick() {
             this.getTask(this.data);
             this.showEditModal(true);
         },
+        // обработка клика по кнопке удаления
         clickIcon() {
             this.clickTrashButton(this.data._id);
         },
+        // обработка клика по кнопке выполнения задачи
         handleCheckButton() {
             this.data.done = !this.data.done
             this.putDoneFlag(this.data)

@@ -22,7 +22,7 @@
         <my-selector v-model:priority="priority" />
         <my-button
             :buttonText="buttonText"
-            :isDisabled="false"
+            :isDisabled="isDisabled"
         />
     </form>
 </template>
@@ -34,9 +34,10 @@ export default {
         return {
             description: '',
             header: '',
-            priority: ''
+            priority: '',
         }
     },
+
     props: {
         title: {
             type: String,
@@ -54,6 +55,7 @@ export default {
     inject: ['submitForm'],
 
     methods: {
+        // проверка и подтверждение введенных данных
         handleForm(evt) {
             if (evt.target.checkValidity()) {
                 [this.data.header, this.data.description, this.data.priority] = 
@@ -64,6 +66,7 @@ export default {
     },
     
     mounted () {
+        // копируем поля в форму для редактирования
         this.header = this.data?.header || ''
         this.description = this.data?.description || '';
         this.priority = this.data?.priority || 'l';
