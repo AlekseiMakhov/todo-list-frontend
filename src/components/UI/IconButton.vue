@@ -2,7 +2,6 @@
     <button
         type="button"
         class="icon-button"
-        @click.stop="onClick"
     >
     </button>
 </template>
@@ -10,17 +9,6 @@
 <script>
     export default {
         name: 'my-icon-button',
-        props: {
-            task: {
-                type: Object,
-                default: {}
-            },
-        },
-        methods: {
-            onClick() {
-                return this.$emit('buttonClick', this.task)
-            },
-        },
     }
 </script>
 

@@ -20,7 +20,7 @@
         props: {
             type: {
                 type: String,
-                default: ''
+                default: '',
             },
             altText: {
                 type: String,
@@ -36,29 +36,6 @@
 
 <style lang="scss" scoped>
 @import '@/styles/global.scss';
-
-.fade-slide-enter-active, .fade-slide-leave-active {
-  transition: transform 2s
-}
-
-.fade-slide-appear {
-  transition: transform 2s
-}
-
-.fade-slide-appear-from {
-  opacity: 0;
-  transform: translate(-100px);
-}
-
-.fade-slide-enter-from {
-  opacity: 0;
-  transform: translate(-100px);
-}
-
-.fade-slide-leave-to {
-  opacity: 0;
-  transform: translate(100px);
-}
 
 .alternate {
     padding: 110px 0;

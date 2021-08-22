@@ -3,7 +3,6 @@
         class="button"
         :type="type"
         :disabled="isDisabled"
-        @click="$emit('handleButtonClick')"
     >
     {{ buttonText }}
     </button>
@@ -12,23 +11,23 @@
 <script>
 
 export default {
-  name: 'my-button',
-  props: {
-    buttonText: {
-      type: String,
-      default: '',
+    name: 'my-button',
+    props: {
+        buttonText: {
+            type: String,
+            default: '',
+        },
+        isDisabled: {
+            type: Boolean,
+            default: false,
+        },
+        type: {
+            type: String,
+            default: 'submit',
+        },
     },
-    isDisabled: {
-      type: Boolean,
-      default: false,
-    },
-    type: {
-      type: String,
-      default: 'submit',
-    },
-  },
-  emits: ['handleButtonClick']
-};
+}
+
 </script>
 
 <style lang="scss">

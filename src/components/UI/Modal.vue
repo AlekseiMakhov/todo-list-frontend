@@ -2,31 +2,29 @@
     <transition name="fade" mode="out-in">
         <div class="modal" v-if="show" @click.stop="closeModal">
             <div class="modal__container" @click.stop>
-            <div @closeForm="closeForm" class="modal__content">
-                <slot></slot>
-            </div>
-            <div class="modal__close-button" @click="closeModal"></div>
+                <div @closeForm="closeForm" class="modal__content">
+                    <slot></slot>
+                </div>
+                <div class="modal__close-button" @click="closeModal"></div>
             </div>
         </div>
     </transition>
-    
 </template>
 
 <script>
 export default {
-  name: 'my-modal',
-  props: {
-      show: {
-          type: Boolean,
-          default: false
-      }
-  },
-  methods: {
-      closeModal() {
-        this.$emit('update:show', false);
-      },
-  },
-  emits: ['update:show']
+    name: 'my-modal',
+    props: {
+        show: {
+            type: Boolean,
+            default: false
+        }
+    },
+    methods: {
+        closeModal() {
+            this.$emit('update:show', false);
+        },
+    },
 
 };
 
@@ -36,11 +34,11 @@ export default {
 @import '@/styles/global.scss';
 
 .fade-enter-active, .fade-leave-active {
-  transition: opacity .25s
+    transition: opacity .25s
 }
 
 .fade-enter-from, .fade-leave-to {
-  opacity: 0;
+    opacity: 0;
 }
 
 .modal {
@@ -112,6 +110,5 @@ export default {
             transform: rotate(-45deg) translate(-12px, 42px);
         }
     }
-
 }
 </style>

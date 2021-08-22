@@ -1,24 +1,26 @@
 <template>
-    <form class="form" @submit.prevent="submitForm">
+    <form class="form" @submit.prevent="handleForm">
         <h2 class="form__title app__title">{{ title }}</h2>
-        <input 
+        <input
             type="text"
             class="form__header"
             minlength="1"
             maxlength="100"
+            required
             placeholder="Заголовок"
             v-model.trim="header"
         />
         <textarea
-            name="desc"
+            name="description"
             placeholder="Описание"
-            id="desc"
+            minlength="1"
+            required
             class="form__desc"
             v-model.trim="description"
         >
         </textarea>
         <my-selector v-model:priority="priority" />
-        <my-button 
+        <my-button
             :buttonText="buttonText"
             :isDisabled="false"
         />
@@ -26,54 +28,47 @@
 </template>
 
 <script>
-
-
 export default {
-  name: 'my-form',
-  data() {
-      return {
-          data: {},
-          description: '',
-          header: '',
-          priority: 'l'
-      }
-  },
-  props: {
-      title: {
-          type: String,
-          default: 'Новое задание',
-      },
-      buttonText: {
-          type: String,
-          default: 'Добавить задачу'
-      },
-      task: {
-          type: Object,
-          default: {}
-      }
-  },
-  inject: ['curTask'],
+    name: 'my-form',
+    data() {
+        return {
+            description: '',
+            header: '',
+            priority: ''
+        }
+    },
+    props: {
+        title: {
+            type: String,
+            default: 'Новое задание',
+        },
+        buttonText: {
+            type: String,
+            default: 'Добавить задачу'
+        },
+        data: {
+            type: Object,
+            default: {}
+        }
+    },
+    inject: ['submitForm'],
 
-  methods: {
-      submitForm(evt) {
-          if (evt.target.checkValidity()) {
-            this.data.header = this.header;
-            this.data.description = this.description;
-            this.data.priority = this.priority;
-            this.$emit('submit', this.data)
-          }
-      },
-  },
-  
-  mounted () {
-      this.data = this.curTask();
-      if (this.data) {
-          this.header = this.data.header;
-          this.description = this.data.description;
-          this.priority = this.data.priority;
-      }
-  },
-  
+    methods: {
+        handleForm(evt) {
+            if (evt.target.checkValidity()) {
+                [this.data.header, this.data.description, this.data.priority] = 
+                [this.header, this.description, this.priority]
+                this.submitForm(this.data)
+            }
+        },
+    },
+    
+    mounted () {
+        this.header = this.data?.header || ''
+        this.description = this.data?.description || '';
+        this.priority = this.data?.priority || 'l';
+    },
+
 };
 </script>
 

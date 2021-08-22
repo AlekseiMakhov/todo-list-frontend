@@ -20,28 +20,20 @@ async function addTask(data) {
     }
 }
 
-async function editTask(data) {
+async function editTask(id, data) {
     try {
-        console.log(BASE_URL+data._id)
-        const r = await axios.put(BASE_URL+data._id, data)
-        console.log(r)
-        return r
+        return await axios.put(BASE_URL+id, data)
     }
     catch {
-        console.log('err')
         return new Error('Error')
     }
 }
 
 async function deleteTask(id) {
     try {
-        console.log(BASE_URL+id)
-        const r = await axios.delete(BASE_URL+id)
-        console.log(r)
-        return r
+        return await axios.delete(BASE_URL+id)
     }
     catch {
-        console.log('err')
         return new Error('Error')
     }
 }
