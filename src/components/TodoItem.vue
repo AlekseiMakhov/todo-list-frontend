@@ -33,6 +33,11 @@
 
 export default {
     name: 'my-todo-item',
+    data() {
+      return {
+        done: false
+      }
+    },
     props: {
         data: {
             type: Object,
@@ -56,11 +61,20 @@ export default {
         },
         // обработка клика по кнопке выполнения задачи
         handleCheckButton() {
-            this.data.done = !this.data.done
-            this.putDoneFlag(this.data)
-        }
+            const newData = JSON.parse(JSON.stringify(this.data))
+            this.done = !this.done
+            newData.done = this.done
+            this.putDoneFlag(newData)
+        },
+        // update() {
+          // console.log('here')
+            // this.done = this.data.done;
+            // this.$forceUpdate()
+        // }
     },
-
+    mounted() {
+        this.done = this.data.done;
+    }
 };
 </script>
 

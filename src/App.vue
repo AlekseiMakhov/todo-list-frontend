@@ -158,6 +158,7 @@ export default {
             .then(response => {
                 if (!response.data) throw new Error('Сервер недоступен')
                 if (response.statusCode == 400) throw new Error(BAD_REQUEST_TEXT);
+                this.listItems[this.listItems.findIndex(item => item._id == data._id ) ].done = data.done
             })
             .catch(err => {
                 this.isError = true;
