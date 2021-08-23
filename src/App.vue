@@ -125,6 +125,7 @@ export default {
             this.isLoading = true;
             getTasks(this.date)
             .then(response => {
+                if (!response.data) throw new Error('Сервер недоступен')
                 if (response.statusCode == 400) throw new Error(BAD_REQUEST_TEXT);
                 this.isEmpty = !response.data.length;
                 this.listItems = response.data;
@@ -155,6 +156,7 @@ export default {
                 done: data.done,
             })
             .then(response => {
+                if (!response.data) throw new Error('Сервер недоступен')
                 if (response.statusCode == 400) throw new Error(BAD_REQUEST_TEXT);
             })
             .catch(err => {
@@ -202,6 +204,7 @@ export default {
             data.done = false, data.date = this.date;
             addTask(data)
             .then(response => {
+                if (!response.data) throw new Error('Сервер недоступен')
                 if (response.statusCode == 400) throw new Error(BAD_REQUEST_TEXT);
                 this.listItems = [...this.listItems, response.data];
             })
