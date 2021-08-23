@@ -111,4 +111,36 @@ export default {
         }
     }
 }
+
+@media screen and (max-width: 620px) {
+
+    .modal {
+
+        min-width: 375px;
+
+        &__container {
+            width: calc(100% - 40px);
+        }
+
+        &__content {
+            width: 100%;
+        }
+
+        &__close-button {
+            width: 60px;
+            height: 60px;
+            margin-top: 30px;
+
+            &::before {
+                width: 30px;
+                transform: rotate(45deg) translate(32px, 10px);
+            }
+
+            &::after {
+                width: 30px;
+                transform: rotate(-45deg) translate(-10px, 32px);
+            }
+        }
+    }
+}
 </style>

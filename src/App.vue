@@ -242,6 +242,7 @@ export default {
     &__content {
         margin: 0 auto;
         width: $max-width;
+        min-width: 375px;
     }
 
     &__title {
@@ -281,4 +282,26 @@ export default {
         }                       
     }
 }
+
+@media screen and (max-width: 620px) {
+    .app {
+
+        &__content {
+            margin: 0 20px;
+            width: auto;
+        }
+
+        &__title {
+            margin: 80px 0 0;
+            font-size: 32px;
+            line-height: 36px;
+            text-align: center;
+        }
+
+        &__date-input {
+            margin: 0 auto;
+        }
+    }
+}
+
 </style>

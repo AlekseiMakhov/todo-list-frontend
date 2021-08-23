@@ -70,4 +70,18 @@
     }
 }
 
+@media screen and (max-width: 620px) {
+
+    .selector {
+
+        &__priority-level {
+
+            font-size: 16px;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+    }
+}
+
 </style>

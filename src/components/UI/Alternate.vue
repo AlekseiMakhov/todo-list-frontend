@@ -84,4 +84,21 @@
     }
 }
 
+@media screen and (max-width: 620px) {
+    
+    .alternate {
+        padding: 50px 0;
+
+        &__image {
+            width: 200px;
+            height: 200px;
+        }
+
+        &__text {
+            font-size: 18px;
+            line-height: 22px;
+        }
+    }
+}
+
 </style>
