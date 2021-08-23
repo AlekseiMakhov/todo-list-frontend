@@ -22,7 +22,6 @@
         <my-selector v-model:priority="priority" />
         <my-button
             :buttonText="buttonText"
-            :isDisabled="isDisabled"
         />
     </form>
 </template>

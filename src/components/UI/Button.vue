@@ -2,7 +2,6 @@
     <button
         class="button"
         :type="type"
-        :disabled="isDisabled"
     >
     {{ buttonText }}
     </button>

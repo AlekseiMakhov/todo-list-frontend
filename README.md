@@ -1,24 +1,51 @@
-# todo-list-frontend
+# Todo List (frontend)
 
-## Project setup
+## Список задач (клиентская часть)
+
+## Установка зависимостей
+
 ```
 npm install
 ```
 
-### Compiles and hot-reloads for development
+### Компиляция и запуск проекта для разработки
+
 ```
 npm run serve
 ```
 
-### Compiles and minifies for production
+### Компиляция и минификация проекта для деплоя
+
 ```
 npm run build
 ```
 
-### Lints and fixes files
-```
-npm run lint
-```
+#### Technologies
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+- Vue.js 3
+- SCSS
+- npm
+- Node.js
+- Express.js
+- mongo DB
+
+#### Функции приложения
+
+1. Добавление задачи в БД
+2. Фильтр задач по дате
+3. Редактирование задачи
+4. Установка флага выполнения задачи
+5. Удаление задачи
+
+#### Модель данных
+
+Задача содержит поля:
+
+- _id_ - автоматически сгенерированный идентификатор записи в БД
+- _header_ - Заголовок (название или краткое описание) задачи - _строка_
+- _description_ - описание (подробное) задачи - _многострочный текст_
+- _priority_ - приоритет задачи (обычная (l), важная (m) или очень важная (h))
+- _date_ - дата (формат гггг-мм-дд)
+- _done_ - флаг выполнения задачи - _да, нет_
+
+#### [Серверная часть -->](https://github.com/AlekseiMakhov/todo-list-api)
